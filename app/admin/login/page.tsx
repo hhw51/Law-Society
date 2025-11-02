@@ -5,7 +5,7 @@ import { useState } from "react"
 import { motion } from "framer-motion"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
-import { getSupabaseClient } from "@/lib/supabase-client"
+import { adminSignIn } from "@/lib/auth-actions"
 
 export default function AdminLogin() {
   const [formData, setFormData] = useState({
@@ -27,28 +27,15 @@ export default function AdminLogin() {
     setError("")
 
     try {
-      const supabase = getSupabaseClient()
+      const result = await adminSignIn(formData.email, formData.password)
 
-      const { data, error: authError } = await supabase.auth.signInWithPassword({
-        email: formData.email,
-        password: formData.password,
-      })
-
-      if (authError) throw authError
-
-      const { data: userData, error: userError } = await supabase
-        .from("users")
-        .select("role")
-        .eq("id", data.user?.id)
-        .single()
-
-      if (userError || userData?.role !== "admin") {
-        throw new Error("Unauthorized: Admin access required")
+      if (result.error) {
+        setError(result.error)
+      } else {
+        router.push("/admin")
       }
-
-      router.push("/admin")
     } catch (err) {
-      setError(err instanceof Error ? err.message : "Invalid email or password")
+      setError("An unexpected error occurred")
     } finally {
       setLoading(false)
     }
@@ -68,7 +55,7 @@ export default function AdminLogin() {
             <span className="text-white font-serif font-bold text-lg">L</span>
           </div>
           <h1 className="font-serif text-3xl font-bold text-primary">Admin Login</h1>
-          <p className="text-neutral-dark text-sm mt-2">Law Society Management Portal</p>
+          <p className="text-neutral-dark text-sm mt-2">Pakistan College of Law Dignity Rights Center</p>
         </div>
 
         {/* Form */}
@@ -91,7 +78,7 @@ export default function AdminLogin() {
               value={formData.email}
               onChange={handleInputChange}
               required
-              placeholder="admin@lawsociety.com"
+              placeholder="admin@pcldrc.edu.pk"
               className="w-full px-4 py-2 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-accent"
             />
           </div>

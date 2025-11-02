@@ -4,6 +4,7 @@ import type React from "react"
 import { useState } from "react"
 import Link from "next/link"
 import { motion } from "framer-motion"
+import { adminSignOut } from "@/lib/auth-actions"
 
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
   const [sidebarOpen, setSidebarOpen] = useState(true)
@@ -16,6 +17,10 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
     { label: "Settings", href: "/admin/settings" },
   ]
 
+  const handleLogout = async () => {
+    await adminSignOut()
+  }
+
   return (
     <div className="flex h-screen bg-background">
       {/* Sidebar */}
@@ -26,7 +31,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
       >
         {/* Logo */}
         <div className="p-4 border-b border-primary-light flex items-center justify-between">
-          {sidebarOpen && <span className="font-serif font-bold text-lg">Admin</span>}
+          {sidebarOpen && <span className="font-serif font-bold text-lg">Admin Panel</span>}
           <button
             onClick={() => setSidebarOpen(!sidebarOpen)}
             className="p-1 hover:bg-primary-light rounded transition-smooth"
@@ -53,9 +58,11 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
           ))}
         </nav>
 
-        {/* Logout */}
         <div className="p-4 border-t border-primary-light">
-          <button className="w-full px-4 py-2 bg-accent hover:bg-accent-light text-primary font-semibold rounded-lg transition-smooth text-sm">
+          <button
+            onClick={handleLogout}
+            className="w-full px-4 py-2 bg-accent hover:bg-accent-light text-primary font-semibold rounded-lg transition-smooth text-sm"
+          >
             {sidebarOpen ? "Logout" : "Out"}
           </button>
         </div>
