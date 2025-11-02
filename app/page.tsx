@@ -31,72 +31,84 @@ export default function Home() {
   return (
     <div className="space-y-0">
       {/* Hero Section with Logo */}
-      <section className="relative min-h-[600px] flex items-center justify-center bg-gradient-to-br from-primary to-primary-light text-white overflow-hidden">
-        <div className="absolute inset-0 opacity-10">
-          <div className="absolute top-20 left-10 w-72 h-72 bg-accent rounded-full mix-blend-multiply filter blur-3xl" />
-          <div className="absolute bottom-20 right-10 w-72 h-72 bg-accent-light rounded-full mix-blend-multiply filter blur-3xl" />
-        </div>
+{/* Hero Section with Logo */}
+<section className="relative min-h-[600px] flex items-center justify-center bg-[#258f6b] text-white overflow-hidden">
+  {/* Background accents */}
+  <div className="absolute inset-0 opacity-15">
+    <div className="absolute top-20 left-10 w-72 h-72 bg-white/20 rounded-full mix-blend-multiply filter blur-3xl" />
+    <div className="absolute bottom-20 right-10 w-72 h-72 bg-white/30 rounded-full mix-blend-multiply filter blur-3xl" />
+  </div>
 
-        <div className="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <motion.div
-            className="mb-8"
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.8 }}
-          >
-            <img
-              src="/logo.png"
-              alt="PCLDRC Logo"
-              className="w-24 h-24 sm:w-32 sm:h-32 mx-auto rounded-full shadow-2xl"
-            />
-          </motion.div>
+  <div className="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+    <motion.div
+      className="mb-8"
+      initial={{ opacity: 0, scale: 0.8 }}
+      animate={{ opacity: 1, scale: 1 }}
+      transition={{ duration: 0.8 }}
+    >
+      <img
+        src="/logo.png"
+        alt="PCLDRC Logo"
+        className="w-24 h-24 sm:w-32 sm:h-32 mx-auto rounded-full shadow-2xl border-4 border-white/20"
+      />
+    </motion.div>
 
-          <motion.h1 className="font-serif text-5xl sm:text-6xl font-bold mb-4 text-balance" {...fadeInUp}>
-            Pakistan College of Law
-          </motion.h1>
-          <motion.p
-            className="text-xl sm:text-2xl font-semibold mb-2 text-accent"
-            {...fadeInUp}
-            transition={{ delay: 0.1 }}
-          >
-            Dignity Rights Center
-          </motion.p>
-          <motion.p
-            className="text-lg text-gray-100 mb-8 max-w-2xl mx-auto text-balance"
-            {...fadeInUp}
-            transition={{ delay: 0.2 }}
-          >
-            Advancing justice, dignity, and human rights through legal education, advocacy, and research.
-          </motion.p>
-          <motion.div
-            className="flex flex-col sm:flex-row gap-4 justify-center flex-wrap"
-            {...fadeInUp}
-            transition={{ delay: 0.3 }}
-          >
-            <Link
-              href="/submit-blog"
-              className="px-6 py-3 bg-accent hover:bg-accent-light text-primary font-semibold rounded-lg transition-smooth"
-            >
-              Submit a Blog
-            </Link>
-            <Link
-              href="/gallery"
-              className="px-6 py-3 bg-primary-light hover:bg-primary font-semibold text-white rounded-lg transition-smooth border border-white/20"
-            >
-              View Events
-            </Link>
-            <Link
-              href="/contact"
-              className="px-6 py-3 border-2 border-white hover:bg-white/10 text-white font-semibold rounded-lg transition-smooth"
-            >
-              Get in Touch
-            </Link>
-          </motion.div>
-        </div>
-      </section>
+    <motion.h1
+      className="font-serif text-5xl sm:text-6xl font-bold mb-4 text-white"
+      {...fadeInUp}
+    >
+      Pakistan College of Law
+    </motion.h1>
+
+    <motion.p
+      className="text-xl sm:text-2xl font-semibold mb-2 text-white/90"
+      {...fadeInUp}
+      transition={{ delay: 0.1 }}
+    >
+      Dignity Rights Center
+    </motion.p>
+
+    <motion.p
+      className="text-lg text-white/80 mb-8 max-w-2xl mx-auto"
+      {...fadeInUp}
+      transition={{ delay: 0.2 }}
+    >
+      Advancing justice, dignity, and human rights through legal education, advocacy, and research.
+    </motion.p>
+
+    <motion.div
+      className="flex flex-col sm:flex-row gap-4 justify-center flex-wrap"
+      {...fadeInUp}
+      transition={{ delay: 0.3 }}
+    >
+      <Link
+        href="/submit-blog"
+        className="px-6 py-3 bg-white text-[#1e7b5c] font-semibold rounded-lg hover:bg-white/90 transition-smooth shadow-md"
+      >
+        Submit a Blog
+      </Link>
+
+      <Link
+        href="/gallery"
+        className="px-6 py-3 bg-white/10 border border-white/30 text-white font-semibold rounded-lg hover:bg-white/20 transition-smooth"
+      >
+        View Events
+      </Link>
+
+      <Link
+        href="/contact"
+        className="px-6 py-3 border-2 border-white text-white font-semibold rounded-lg hover:bg-white/10 transition-smooth"
+      >
+        Get in Touch
+      </Link>
+    </motion.div>
+  </div>
+</section>
+
+
 
       {/* Mission Section */}
-      <section className="py-16 bg-white">
+      <section className="py-16 bg-[#fff7e0]">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
             className="text-center mb-12"
@@ -105,7 +117,7 @@ export default function Home() {
             transition={{ duration: 0.6 }}
             viewport={{ once: true }}
           >
-            <h2 className="font-serif text-4xl font-bold mb-4 text-primary">Our Mission</h2>
+            <h2 className="font-serif text-4xl font-bold mb-4 text-[#258f6b]">Our Mission</h2>
             <p className="text-lg text-neutral-dark max-w-3xl mx-auto leading-relaxed">
               The Pakistan College of Law Dignity Rights Center is dedicated to promoting and protecting human rights
               through legal education, advocacy, and groundbreaking research. We work to foster a society where dignity,
@@ -116,7 +128,7 @@ export default function Home() {
       </section>
 
       {/* Key Focus Areas */}
-      <section className="py-20 bg-neutral-light">
+      <section className="py-20 bg-[#258f6b]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
             className="text-center mb-12"
@@ -125,8 +137,8 @@ export default function Home() {
             transition={{ duration: 0.6 }}
             viewport={{ once: true }}
           >
-            <h2 className="font-serif text-4xl font-bold mb-4">What We Do</h2>
-            <p className="text-neutral-dark max-w-2xl mx-auto">
+            <h2 className="font-serif text-4xl text-neutral-light font-bold mb-4">What We Do</h2>
+            <p className="text-neutral-light max-w-2xl mx-auto">
               Championing rights and justice across key areas of law and society
             </p>
           </motion.div>
@@ -150,24 +162,9 @@ export default function Home() {
                 icon: "📚",
               },
               {
-                title: "Education & Training",
-                description: "Developing next-generation human rights lawyers",
-                icon: "🎓",
-              },
-              {
-                title: "Policy Development",
-                description: "Contributing to progressive legal frameworks",
-                icon: "📋",
-              },
-              {
                 title: "Community Engagement",
                 description: "Public awareness and grassroots rights education",
                 icon: "🤝",
-              },
-              {
-                title: "International Cooperation",
-                description: "Partnering with global human rights organizations",
-                icon: "🌍",
               },
             ].map((item, i) => (
               <motion.div
@@ -185,80 +182,87 @@ export default function Home() {
       </section>
 
       {/* Featured Events/Talks */}
-      <section className="py-20 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <motion.div
-            className="text-center mb-12"
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            transition={{ duration: 0.6 }}
-            viewport={{ once: true }}
-          >
-            <h2 className="font-serif text-4xl font-bold mb-4">Recent Events & Initiatives</h2>
-            <p className="text-neutral-dark max-w-2xl mx-auto mb-8">
-              Explore our latest talks, seminars, and campaigns dedicated to advancing dignity and rights
-            </p>
-            <Link
-              href="/gallery"
-              className="inline-block px-6 py-2 bg-primary hover:bg-primary-light text-white font-semibold rounded-lg transition-smooth"
-            >
-              View All Events
-            </Link>
-          </motion.div>
+      <section className="py-20 bg-[#fff7e0]"> {/* soft cream-yellow background */}
+  <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <motion.div
+      className="text-center mb-12"
+      initial={{ opacity: 0 }}
+      whileInView={{ opacity: 1 }}
+      transition={{ duration: 0.6 }}
+      viewport={{ once: true }}
+    >
+      <h2 className="font-serif text-4xl font-bold mb-4 text-[#1e7b5c]">
+        Recent Events & Initiatives
+      </h2>
+      <p className="text-neutral-700 max-w-2xl mx-auto mb-8">
+        Explore our latest talks, seminars, and campaigns dedicated to advancing dignity and rights
+      </p>
+      <Link
+        href="/gallery"
+        className="inline-block px-6 py-2 bg-[#1e7b5c] hover:bg-[#258f6b] text-white font-semibold rounded-lg transition-smooth shadow-md"
+      >
+        View All Events
+      </Link>
+    </motion.div>
 
-          <motion.div
-            className="grid grid-cols-1 md:grid-cols-2 gap-8"
-            variants={containerVariants}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
+    <motion.div
+      className="grid grid-cols-1 md:grid-cols-2 gap-8"
+      variants={containerVariants}
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true }}
+    >
+      {[
+        {
+          title: "Transgender Rights & Dignity Seminar",
+          date: "Recent",
+          category: "Seminar",
+        },
+        {
+          title: "Environmental Law & Climate Crisis Forum",
+          date: "Recent",
+          category: "Forum",
+        },
+        {
+          title: "Problem-Solving & Decision-Making Workshop",
+          date: "Recent",
+          category: "Workshop",
+        },
+        {
+          title: "Legal Quiz & Knowledge Competition",
+          date: "Upcoming",
+          category: "Competition",
+        },
+      ].map((event, i) => (
+        <motion.div
+          key={i}
+          className="p-6 bg-white rounded-lg border-l-4 border-[#ffb500] hover:shadow-md transition-smooth"
+          variants={itemVariants}
+        >
+          <div className="flex items-center justify-between mb-2">
+            <span className="text-xs font-semibold text-[#ffb500] uppercase">
+              {event.category}
+            </span>
+            <span className="text-sm text-gray-500">{event.date}</span>
+          </div>
+          <h3 className="font-serif text-lg font-bold mb-3 text-[#1e7b5c]">
+            {event.title}
+          </h3>
+          <Link
+            href="/gallery"
+            className="text-sm font-semibold text-[#258f6b] hover:text-[#1e7b5c] transition-smooth"
           >
-            {[
-              {
-                title: "Transgender Rights & Dignity Seminar",
-                date: "Recent",
-                category: "Seminar",
-              },
-              {
-                title: "Environmental Law & Climate Crisis Forum",
-                date: "Recent",
-                category: "Forum",
-              },
-              {
-                title: "Problem-Solving & Decision-Making Workshop",
-                date: "Recent",
-                category: "Workshop",
-              },
-              {
-                title: "Legal Quiz & Knowledge Competition",
-                date: "Upcoming",
-                category: "Competition",
-              },
-            ].map((event, i) => (
-              <motion.div
-                key={i}
-                className="p-6 bg-neutral-light rounded-lg border-l-4 border-accent hover:shadow-md transition-smooth"
-                variants={itemVariants}
-              >
-                <div className="flex items-center justify-between mb-2">
-                  <span className="text-xs font-semibold text-accent uppercase">{event.category}</span>
-                  <span className="text-sm text-neutral-dark">{event.date}</span>
-                </div>
-                <h3 className="font-serif text-lg font-bold text-primary mb-3">{event.title}</h3>
-                <Link
-                  href="/gallery"
-                  className="text-sm font-semibold text-primary hover:text-primary-light transition-smooth"
-                >
-                  Learn More →
-                </Link>
-              </motion.div>
-            ))}
-          </motion.div>
-        </div>
-      </section>
+            Learn More →
+          </Link>
+        </motion.div>
+      ))}
+    </motion.div>
+  </div>
+</section>
+
 
       {/* Blog & Contributions */}
-      <section className="py-20 bg-gradient-to-br from-primary/5 to-accent/5">
+      <section className="py-20 bg-[#fff7e0] from-primary/5 to-accent/5">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
             <motion.div
@@ -374,3 +378,4 @@ export default function Home() {
     </div>
   )
 }
+
