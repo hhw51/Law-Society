@@ -5,6 +5,19 @@ export interface User {
   created_at: string
 }
 
+export interface BlogPost {
+  id: string
+  title: string
+  slug: string
+  content: string
+  status: string
+  author_id?: string
+  tags?: string[]
+  created_at: string
+  updated_at: string
+}
+
+
 export interface Blog {
   id: string
   title: string
