@@ -25,8 +25,8 @@ export default function Header() {
           <Link href="/" className="flex items-center gap-3 z-50">
             <img src="/logo.png" alt="PCLDRC Logo" className="w-10 h-10 sm:w-12 sm:h-12 rounded-full object-cover" />
             <div className="hidden sm:block">
-              <span className="font-serif font-bold text-sm text-primary block leading-tight">PCL Dignity Rights</span>
-              <span className="text-xs text-neutral-dark">Center</span>
+              <span className="font-serif font-bold text-sm text-primary block leading-tight">Dignity Rights Center</span>
+              <span className="text-xs text-neutral-dark">PCL</span>
             </div>
           </Link>
 
