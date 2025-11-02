@@ -49,6 +49,35 @@ export default function About() {
         </div>
       </section>
 
+      {/* PCL Dignity Rights Center */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          viewport={{ once: true }}
+        >
+          <h2 className="font-serif text-4xl font-bold mb-6 text-center">PCL Dignity Rights Center</h2>
+          <p className="text-neutral-dark leading-relaxed mb-4">
+            The <strong>PCL Dignity Rights Center</strong> is a project of Pakistan College of Law, established in 2019
+            under the guidance of <strong>Dignity Rights International</strong>. It is dedicated to advancing the
+            understanding and protection of human dignity in Pakistan, with a particular focus on{" "}
+            <strong>Article 14 of the Constitution of Pakistan (1973)</strong>.
+          </p>
+          <p className="text-neutral-dark leading-relaxed mb-4">
+            The project emphasizes <strong>research, advocacy, and education</strong> related to dignity rights, seeking
+            to influence policy and strengthen legal frameworks that uphold the dignity of all individuals. Through
+            participation in this initiative, students gain valuable experience in human rights law, public interest
+            litigation, and grassroots advocacy.
+          </p>
+          <p className="text-neutral-dark leading-relaxed">
+            The Center achieves its mission through a variety of activities including{" "}
+            <strong>research papers, practicums, guest lectures, short presentations, small moots,</strong> and ongoing
+            updates shared through our <strong>social media newsfeed</strong>.
+          </p>
+        </motion.div>
+      </section>
+
       {/* Values */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <h2 className="font-serif text-3xl font-bold mb-12 text-center">Our Core Values</h2>
