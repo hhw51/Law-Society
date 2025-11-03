@@ -4,6 +4,7 @@ import { useState } from "react"
 import { useRouter } from "next/navigation"
 import BlogEditor from "@/components/BlogEditor"
 import { getSupabaseClient } from "@/lib/supabase-client"
+import { toast } from "sonner"
 
 export default function NewBlogPage() {
   const [title, setTitle] = useState("")
@@ -13,9 +14,12 @@ export default function NewBlogPage() {
   const router = useRouter()
 
   const handleSubmit = async () => {
-    if (!title || !content) return alert("Please fill all fields.")
-    setLoading(true)
+    if (!title || !content) {
+      toast.error("Please fill out all fields.")
+      return
+    }
 
+    setLoading(true)
     const supabase = getSupabaseClient()
     const slug = title.toLowerCase().replace(/\s+/g, "-")
 
@@ -30,10 +34,14 @@ export default function NewBlogPage() {
     ])
 
     setLoading(false)
-    if (error) return alert(error.message)
 
-    alert("Blog submitted for approval!")
-    router.push("/dashboard/blog/manage")
+    if (error) {
+      toast.error(`Error submitting blog: ${error.message}`)
+      return
+    }
+
+    toast.success("Blog submitted for approval!")
+    router.push("/blog/success")
   }
 
   return (
@@ -59,7 +67,7 @@ export default function NewBlogPage() {
       <button
         onClick={handleSubmit}
         disabled={loading}
-        className="bg-[#1e7b5c] text-white px-6 py-2 rounded hover:bg-[#166549]"
+        className="bg-[#1e7b5c] text-white px-6 py-2 rounded hover:bg-[#166549] disabled:opacity-70"
       >
         {loading ? "Submitting..." : "Submit for Approval"}
       </button>
