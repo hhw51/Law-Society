@@ -1,10 +1,11 @@
 "use client"
 
-import { useCallback } from "react"
-import { useEditor, EditorContent, type Editor } from "@tiptap/react"
+import { useEditor, EditorContent } from "@tiptap/react"
 import StarterKit from "@tiptap/starter-kit"
 import Image from "@tiptap/extension-image"
+import { useCallback } from "react"
 import { getSupabaseClient } from "@/lib/supabase-client"
+import Placeholder from "@tiptap/extension-placeholder"
 
 interface BlogEditorProps {
   content: string
@@ -13,21 +14,24 @@ interface BlogEditorProps {
 
 export default function BlogEditor({ content, setContent }: BlogEditorProps) {
   const editor = useEditor({
-    extensions: [StarterKit, Image],
+    extensions: [
+      StarterKit,
+      Image.configure({
+        HTMLAttributes: { class: "mx-auto my-4 rounded-lg" },
+      }),
+      Placeholder.configure({
+        placeholder: "Write your amazing blog here...",
+      }),
+    ],
     content,
-    onUpdate: ({ editor }) => {
-      setContent(editor.getHTML())
-    },
+    onUpdate: ({ editor }) => setContent(editor.getHTML()),
   })
 
   const addImage = useCallback(async () => {
-    if (!editor) return
-
     const supabase = getSupabaseClient()
     const input = document.createElement("input")
     input.type = "file"
     input.accept = "image/*"
-
     input.onchange = async () => {
       const file = input.files?.[0]
       if (!file) return
@@ -38,25 +42,20 @@ export default function BlogEditor({ content, setContent }: BlogEditorProps) {
         .upload(fileName, file)
 
       if (error) {
-        alert("Image upload failed: " + error.message)
+        console.error(error)
         return
       }
 
-      const { data } = supabase.storage
-        .from("blog-images")
-        .getPublicUrl(fileName)
-
-      // 👇 Use type assertion here to silence TS safely
-      ;(editor.chain() as any).focus().setImage({ src: data.publicUrl }).run()
+      const { data } = supabase.storage.from("blog-images").getPublicUrl(fileName)
+      editor?.chain().focus().setImage({ src: data.publicUrl }).run()
     }
-
     input.click()
   }, [editor])
 
   if (!editor) return null
 
   return (
-    <div className="border rounded-lg p-3 space-y-3 bg-white shadow-sm">
+    <div className="border rounded-lg p-3 space-y-3 bg-white">
       <div className="flex flex-wrap gap-2 border-b pb-2 mb-2">
         {[ 
           { label: "Bold", action: () => editor.chain().focus().toggleBold().run() },
@@ -73,11 +72,28 @@ export default function BlogEditor({ content, setContent }: BlogEditorProps) {
           </button>
         ))}
 
+        <button onClick={addImage} className="px-2 py-1 border rounded hover:bg-gray-100">
+          🖼️ Add Image
+        </button>
+
+        {/* Optional image alignment tools */}
         <button
-          onClick={addImage}
+          onClick={() => editor.chain().focus().updateAttributes("image", { class: "float-left mr-4 my-2 rounded" }).run()}
           className="px-2 py-1 border rounded hover:bg-gray-100"
         >
-          🖼️ Add Image
+          ⬅️ Left
+        </button>
+        <button
+          onClick={() => editor.chain().focus().updateAttributes("image", { class: "mx-auto my-4 rounded" }).run()}
+          className="px-2 py-1 border rounded hover:bg-gray-100"
+        >
+          ⬆️ Center
+        </button>
+        <button
+          onClick={() => editor.chain().focus().updateAttributes("image", { class: "float-right ml-4 my-2 rounded" }).run()}
+          className="px-2 py-1 border rounded hover:bg-gray-100"
+        >
+          ➡️ Right
         </button>
       </div>
 
