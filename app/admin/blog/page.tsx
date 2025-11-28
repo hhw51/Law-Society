@@ -55,25 +55,15 @@ export default function AdminBlog() {
   return (
     <div className="space-y-8">
       {/* Header */}
-{/* Header */}
-<div className="flex justify-between items-center">
-  <h1 className="font-serif text-4xl font-bold">Blog Management</h1>
-  <div className="flex gap-3">
-    <Link
-      href="/admin/blog/new"
-      className="px-6 py-2 bg-[#1e7b5c] hover:bg-[#166548] text-white font-semibold rounded-lg transition"
-    >
-      + New Post
-    </Link>
-    <Link
-      href="/admin/blog/manage"
-      className="px-6 py-2 border border-[#1e7b5c] text-[#1e7b5c] hover:bg-[#1e7b5c] hover:text-white font-semibold rounded-lg transition"
-    >
-      ⚙️ Manage Posts
-    </Link>
-  </div>
-</div>
-
+      <div className="flex justify-between items-center">
+        <h1 className="font-serif text-4xl font-bold">Blog Management</h1>
+        <Link
+          href="/admin/blog/new"
+          className="px-6 py-2 bg-accent hover:bg-accent-light text-primary font-semibold rounded-lg transition-smooth"
+        >
+          New Post
+        </Link>
+      </div>
 
       {/* Blog Posts Table */}
       <motion.div

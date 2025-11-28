@@ -38,15 +38,15 @@ export default function Blog() {
   if (loading) {
     return (
       <div className="flex items-center justify-center min-h-screen">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#1e7b5c]"></div>
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary"></div>
       </div>
     )
   }
 
   return (
     <div className="space-y-12">
-      {/* Hero Section */}
-      <section className="bg-[#1e7b5c] text-white py-16 relative">
+      {/* Hero */}
+      <section className="bg-primary text-white py-16">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <motion.h1
             className="font-serif text-5xl font-bold mb-4"
@@ -56,27 +56,13 @@ export default function Blog() {
             Blog
           </motion.h1>
           <motion.p
-            className="text-lg text-gray-100 mb-8"
+            className="text-lg text-gray-200"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.1 }}
           >
             Legal insights and updates from our team
           </motion.p>
-
-          {/* ✅ Submit a Blog Button (Visible for everyone) */}
-          <motion.div
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.2 }}
-          >
-            <Link
-              href="/submit-blog"
-              className="inline-block px-6 py-3 bg-white text-[#1e7b5c] font-semibold rounded-lg shadow hover:bg-gray-100 transition-all"
-            >
-              ✍️ Submit a Blog
-            </Link>
-          </motion.div>
         </div>
       </section>
 
@@ -99,15 +85,15 @@ export default function Blog() {
             {posts.map((post, i) => (
               <motion.article
                 key={post.id}
-                className="p-6 border border-border rounded-lg hover:shadow-lg transition-smooth bg-white"
+                className="p-6 border border-border rounded-lg hover:shadow-lg transition-smooth"
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ delay: i * 0.1 }}
                 viewport={{ once: true }}
               >
                 <div className="flex justify-between items-start mb-3">
-                  <h2 className="font-serif text-2xl font-bold text-[#1e7b5c] flex-1">
-                    <Link href={`/blog/${post.slug}`} className="hover:text-[#ffb500] transition-smooth">
+                  <h2 className="font-serif text-2xl font-bold text-primary flex-1">
+                    <Link href={`/blog/${post.slug}`} className="hover:text-accent transition-smooth">
                       {post.title}
                     </Link>
                   </h2>
@@ -119,14 +105,14 @@ export default function Blog() {
                 <div className="flex items-center justify-between">
                   <div className="flex gap-2">
                     {post.tags?.map((tag) => (
-                      <span key={tag} className="text-xs bg-[#1e7b5c]/10 text-[#1e7b5c] px-2 py-1 rounded">
+                      <span key={tag} className="text-xs bg-accent/10 text-accent px-2 py-1 rounded">
                         {tag}
                       </span>
                     ))}
                   </div>
                   <Link
                     href={`/blog/${post.slug}`}
-                    className="text-[#1e7b5c] hover:text-[#ffb500] font-semibold transition-smooth"
+                    className="text-primary hover:text-accent font-semibold transition-smooth"
                   >
                     Read More →
                   </Link>

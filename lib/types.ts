@@ -5,19 +5,6 @@ export interface User {
   created_at: string
 }
 
-export interface BlogPost {
-  id: string
-  title: string
-  slug: string
-  content: string
-  status: string
-  author_id?: string
-  tags?: string[]
-  created_at: string
-  updated_at: string
-}
-
-
 export interface Blog {
   id: string
   title: string
@@ -64,4 +51,24 @@ export interface Settings {
   key: string
   value: string
   updated_at: string
+}
+
+export interface Newsfeed {
+  id: string
+  title: string
+  description: string
+  article_url: string
+  image_url: string
+  source_newspaper: "daily times" | "dawn posts" | "miscellaneous" | "the guardian" | "the news" | "tribune"
+  created_at: string
+}
+
+export interface Judgement {
+  id: string
+  wp_no: string
+  case_name: string
+  plaintiff: string
+  defendant: string
+  pdf_link?: string
+  created_at?: string
 }
