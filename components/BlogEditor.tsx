@@ -3,9 +3,9 @@
 import { useEditor, EditorContent } from "@tiptap/react"
 import StarterKit from "@tiptap/starter-kit"
 import Image from "@tiptap/extension-image"
+import Placeholder from "@tiptap/extension-placeholder"
 import { useCallback } from "react"
 import { getSupabaseClient } from "@/lib/supabase-client"
-import Placeholder from "@tiptap/extension-placeholder"
 
 interface BlogEditorProps {
   content: string
