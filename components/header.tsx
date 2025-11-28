@@ -21,24 +21,39 @@ export default function Header() {
 
   return (
     <header className="sticky top-0 z-50 bg-background border-b border-border">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="max-w-7xl mx-auto px-4">
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
-          <Link href="/" className="flex items-center gap-3 z-50">
-            <img src="/logo.png" alt="PCLDRC Logo" className="w-10 h-10 sm:w-12 sm:h-12 rounded-full object-cover" />
+          <Link href="/" className="flex items-center gap-2 z-50 flex-shrink-0">
+            <img src="/logo.png" alt="PCLDRC Logo" className="w-10 h-10 rounded-full object-cover" />
             <div className="hidden sm:block">
-              <span className="font-serif font-bold text-sm text-primary block leading-tight">PCL Dignity Rights</span>
+              <span className="font-serif font-bold text-xs sm:text-sm text-primary block leading-tight">
+                PCL Dignity Rights
+              </span>
               <span className="text-xs text-neutral-dark">Center</span>
             </div>
           </Link>
 
           {/* Desktop Navigation */}
-          <nav className="hidden md:flex items-center gap-8">
+          <nav className="hidden lg:flex items-center gap-1">
             {navItems.map((item) => (
               <Link
                 key={item.href}
                 href={item.href}
-                className="text-sm font-medium text-foreground hover:text-primary transition-smooth"
+                className="px-3 py-2 text-sm font-medium text-foreground hover:text-primary hover:bg-neutral-light rounded-md transition-smooth whitespace-nowrap"
+              >
+                {item.label}
+              </Link>
+            ))}
+          </nav>
+
+          {/* Tablet/Mobile Navigation */}
+          <nav className="hidden md:flex lg:hidden items-center gap-1">
+            {navItems.slice(0, 5).map((item) => (
+              <Link
+                key={item.href}
+                href={item.href}
+                className="px-2 py-2 text-xs font-medium text-foreground hover:text-primary hover:bg-neutral-light rounded-md transition-smooth whitespace-nowrap"
               >
                 {item.label}
               </Link>
@@ -68,7 +83,7 @@ export default function Header() {
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
                 onClick={() => setIsOpen(false)}
-                className="fixed inset-0 bg-black/20 md:hidden"
+                className="fixed inset-0 bg-black/20"
                 style={{ top: "64px" }}
               />
               {/* Menu */}
@@ -77,9 +92,9 @@ export default function Header() {
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -10 }}
                 transition={{ duration: 0.2 }}
-                className="md:hidden absolute top-16 left-0 right-0 bg-background border-b border-border shadow-lg"
+                className="absolute top-16 left-0 right-0 bg-background border-b border-border shadow-lg z-40"
               >
-                <div className="px-4 py-2 space-y-1">
+                <div className="px-4 py-2 space-y-1 max-h-[calc(100vh-80px)] overflow-y-auto">
                   {navItems.map((item) => (
                     <Link
                       key={item.href}
