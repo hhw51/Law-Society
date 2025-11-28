@@ -8,6 +8,7 @@ import type { Judgement } from "@/lib/types"
 export default function CaseOfTheWeekPage() {
   const [judgements, setJudgements] = useState<Judgement[]>([])
   const [loading, setLoading] = useState(true)
+  const [error, setError] = useState<string | null>(null)
 
   useEffect(() => {
     fetchJudgements()
@@ -16,11 +17,21 @@ export default function CaseOfTheWeekPage() {
   async function fetchJudgements() {
     try {
       setLoading(true)
+      setError(null)
       const res = await fetch("/api/judgements")
       const data = await res.json()
-      setJudgements(data)
-    } catch (error) {
-      console.error("[v0] Error fetching judgements:", error)
+
+      if (res.ok && Array.isArray(data)) {
+        setJudgements(data)
+      } else {
+        setError(data.error || "Failed to fetch cases")
+        setJudgements([])
+      }
+    } catch (err) {
+      const errorMessage = err instanceof Error ? err.message : "An error occurred"
+      console.error("[v0] Error fetching judgements:", err)
+      setError(errorMessage)
+      setJudgements([])
     } finally {
       setLoading(false)
     }
@@ -45,6 +56,11 @@ export default function CaseOfTheWeekPage() {
             <div className="text-center py-12">
               <div className="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-accent" />
               <p className="mt-4 text-neutral-dark">Loading cases...</p>
+            </div>
+          ) : error ? (
+            <div className="text-center py-12 bg-white rounded-lg border border-red-200">
+              <p className="text-red-600 text-lg font-semibold">Error</p>
+              <p className="text-red-500 mt-2">{error}</p>
             </div>
           ) : judgements.length === 0 ? (
             <div className="text-center py-12 bg-white rounded-lg border border-border">

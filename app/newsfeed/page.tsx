@@ -9,6 +9,7 @@ export default function NewsfeedPage() {
   const [newsfeed, setNewsfeed] = useState<Newsfeed[]>([])
   const [selectedNewspaper, setSelectedNewspaper] = useState("all")
   const [loading, setLoading] = useState(true)
+  const [error, setError] = useState<string | null>(null)
 
   const newspapers = ["all", "daily times", "dawn posts", "miscellaneous", "the guardian", "the news", "tribune"]
 
@@ -19,12 +20,22 @@ export default function NewsfeedPage() {
   async function fetchNewsfeed() {
     try {
       setLoading(true)
+      setError(null)
       const params = selectedNewspaper !== "all" ? `?newspaper=${encodeURIComponent(selectedNewspaper)}` : ""
       const res = await fetch(`/api/newsfeed${params}`)
       const data = await res.json()
-      setNewsfeed(data)
-    } catch (error) {
-      console.error("[v0] Error fetching newsfeed:", error)
+
+      if (res.ok && Array.isArray(data)) {
+        setNewsfeed(data)
+      } else {
+        setError(data.error || "Failed to fetch newsfeed")
+        setNewsfeed([])
+      }
+    } catch (err) {
+      const errorMessage = err instanceof Error ? err.message : "An error occurred"
+      console.error("[v0] Error fetching newsfeed:", err)
+      setError(errorMessage)
+      setNewsfeed([])
     } finally {
       setLoading(false)
     }
@@ -73,6 +84,11 @@ export default function NewsfeedPage() {
             <div className="text-center py-12">
               <div className="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-accent" />
               <p className="mt-4 text-neutral-dark">Loading newsfeed...</p>
+            </div>
+          ) : error ? (
+            <div className="text-center py-12 bg-white rounded-lg border border-red-200">
+              <p className="text-red-600 text-lg font-semibold">Error</p>
+              <p className="text-red-500 mt-2">{error}</p>
             </div>
           ) : newsfeed.length === 0 ? (
             <div className="text-center py-12 bg-white rounded-lg border border-border">
