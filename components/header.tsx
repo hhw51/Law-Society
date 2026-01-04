@@ -28,9 +28,9 @@ export default function Header() {
             <img src="/logo.png" alt="PCLDRC Logo" className="w-10 h-10 rounded-full object-cover" />
             <div className="hidden sm:block">
               <span className="font-serif font-bold text-xs sm:text-sm text-primary block leading-tight">
-                PCL Dignity Rights
+                Dignity Rights Center
               </span>
-              <span className="text-xs text-neutral-dark">Center</span>
+              <span className="text-xs text-neutral-dark">Pakistan College of Law</span>
             </div>
           </Link>
 
