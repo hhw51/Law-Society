@@ -52,14 +52,14 @@ export default function Home() {
           </motion.div>
 
           <motion.h1 className="font-serif text-5xl sm:text-6xl font-bold mb-4 text-balance" {...fadeInUp}>
-            Pakistan College of Law
+          Dignity Rights Center
           </motion.h1>
           <motion.p
             className="text-xl sm:text-2xl font-semibold mb-2 text-accent"
             {...fadeInUp}
             transition={{ delay: 0.1 }}
           >
-            Dignity Rights Center
+            Pakistan College of Law
           </motion.p>
           <motion.p
             className="text-lg text-gray-100 mb-8 max-w-2xl mx-auto text-balance"
