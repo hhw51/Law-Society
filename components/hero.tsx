@@ -34,7 +34,7 @@ export default function Hero() {
   // helper to adjust text color for light backgrounds
   const isLight = (color: string): boolean => {
     const c = color.substring(1)
-    const rgb = parseInt(c, 16)
+    const rgb = Number.parseInt(c, 16)
     const r = (rgb >> 16) & 0xff
     const g = (rgb >> 8) & 0xff
     const b = rgb & 0xff
@@ -56,6 +56,10 @@ export default function Hero() {
       style={{ backgroundColor }}
       className={`relative min-h-[600px] flex items-center justify-center overflow-hidden transition-colors duration-1000 ${textColor}`}
     >
+      <div className="absolute inset-0 opacity-10 pointer-events-none">
+        <img src="/images/transgender-rights-dignity.jpg" className="w-full h-full object-cover" alt="" />
+      </div>
+
       <div className="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
         {/* Logo */}
         <motion.div
@@ -64,18 +68,11 @@ export default function Hero() {
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.8 }}
         >
-          <img
-            src="/logo.png"
-            alt="PCLDRC Logo"
-            className="w-24 h-24 sm:w-32 sm:h-32 mx-auto rounded-full shadow-2xl"
-          />
+          <img src="/images/logo.png" alt="PCLDRC Logo" className="w-32 h-32 sm:w-40 sm:h-40 mx-auto drop-shadow-2xl" />
         </motion.div>
 
         {/* Title */}
-        <motion.h1
-          className={`font-serif text-5xl sm:text-6xl font-bold mb-4 ${textColor}`}
-          {...fadeInUp}
-        >
+        <motion.h1 className={`font-serif text-5xl sm:text-6xl font-bold mb-4 ${textColor}`} {...fadeInUp}>
           Pakistan College of Law
         </motion.h1>
 
@@ -90,9 +87,7 @@ export default function Hero() {
 
         {/* Description */}
         <motion.p
-          className={`text-lg mb-8 max-w-2xl mx-auto ${
-            isLight(bgColor) ? "text-gray-700" : "text-gray-100"
-          }`}
+          className={`text-lg mb-8 max-w-2xl mx-auto ${isLight(bgColor) ? "text-gray-700" : "text-gray-100"}`}
           {...fadeInUp}
           transition={{ delay: 0.2 }}
         >

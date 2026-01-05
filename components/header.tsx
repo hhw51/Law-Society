@@ -2,21 +2,43 @@
 
 import { useState } from "react"
 import Link from "next/link"
-import { motion, AnimatePresence } from "framer-motion"
+import { Menu } from "lucide-react"
+import {
+  NavigationMenu,
+  NavigationMenuContent,
+  NavigationMenuItem,
+  NavigationMenuLink,
+  NavigationMenuList,
+  NavigationMenuTrigger,
+  navigationMenuTriggerStyle, // added to fix link styles
+} from "@/components/ui/navigation-menu"
+import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet"
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion"
 
 export default function Header() {
   const [isOpen, setIsOpen] = useState(false)
 
+  // Reorganized navigation structure with Network and Testaments dropdowns
   const navItems = [
     { label: "Home", href: "/" },
     { label: "About", href: "/about" },
     { label: "Practice Areas", href: "/practice-areas" },
-    { label: "Members", href: "/members" },
-    { label: "Blog", href: "/blog" },
-    { label: "Newsfeed", href: "/newsfeed" },
-    { label: "Case of the Week", href: "/case-of-the-week" },
+    {
+      label: "Network",
+      children: [
+        { label: "Members", href: "/members" },
+        { label: "Contact", href: "/contact" },
+      ],
+    },
+    {
+      label: "Testaments",
+      children: [
+        { label: "Blog", href: "/blog" },
+        { label: "Newsfeed", href: "/newsfeed" },
+        { label: "Case of the Week", href: "/case-of-the-week" },
+      ],
+    },
     { label: "Gallery", href: "/gallery" },
-    { label: "Contact", href: "/contact" },
   ]
 
   return (
@@ -25,7 +47,7 @@ export default function Header() {
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
           <Link href="/" className="flex items-center gap-2 z-50 flex-shrink-0">
-            <img src="/logo.png" alt="PCLDRC Logo" className="w-10 h-10 rounded-full object-cover" />
+            <img src="/images/logo.png" alt="PCLDRC Logo" className="w-10 h-10 object-contain" />
             <div className="hidden sm:block">
               <span className="font-serif font-bold text-xs sm:text-sm text-primary block leading-tight">
                 Dignity Rights Center
@@ -34,25 +56,51 @@ export default function Header() {
             </div>
           </Link>
 
-          {/* Desktop Navigation */}
+          {/* Desktop Navigation with NavigationMenu for dropdowns */}
           <nav className="hidden lg:flex items-center gap-1">
-            {navItems.map((item) => (
-              <Link
-                key={item.href}
-                href={item.href}
-                className="px-3 py-2 text-sm font-medium text-foreground hover:text-primary hover:bg-neutral-light rounded-md transition-smooth whitespace-nowrap"
-              >
-                {item.label}
-              </Link>
-            ))}
+            <NavigationMenu>
+              <NavigationMenuList>
+                {navItems.map((item) => {
+                  if (item.children) {
+                    return (
+                      <NavigationMenuItem key={item.label}>
+                        <NavigationMenuTrigger className="text-sm font-medium text-foreground hover:text-primary transition-colors">
+                          {item.label}
+                        </NavigationMenuTrigger>
+                        <NavigationMenuContent>
+                          <ul className="grid w-[200px] gap-1 p-2">
+                            {item.children.map((child) => (
+                              <li key={child.href}>
+                                <Link href={child.href} legacyBehavior passHref>
+                                  <NavigationMenuLink className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground">
+                                    <div className="text-sm font-medium leading-none">{child.label}</div>
+                                  </NavigationMenuLink>
+                                </Link>
+                              </li>
+                            ))}
+                          </ul>
+                        </NavigationMenuContent>
+                      </NavigationMenuItem>
+                    )
+                  }
+                  return (
+                    <NavigationMenuItem key={item.href}>
+                      <Link href={item.href} legacyBehavior passHref>
+                        <NavigationMenuLink className={navigationMenuTriggerStyle()}>{item.label}</NavigationMenuLink>
+                      </Link>
+                    </NavigationMenuItem>
+                  )
+                })}
+              </NavigationMenuList>
+            </NavigationMenu>
           </nav>
 
-          {/* Tablet/Mobile Navigation */}
+          {/* Tablet/Mobile Navigation - simplified for medium screens */}
           <nav className="hidden md:flex lg:hidden items-center gap-1">
-            {navItems.slice(0, 5).map((item) => (
+            {navItems.slice(0, 3).map((item) => (
               <Link
-                key={item.href}
-                href={item.href}
+                key={item.href || item.label}
+                href={item.href || "#"}
                 className="px-2 py-2 text-xs font-medium text-foreground hover:text-primary hover:bg-neutral-light rounded-md transition-smooth whitespace-nowrap"
               >
                 {item.label}
@@ -60,56 +108,63 @@ export default function Header() {
             ))}
           </nav>
 
-          {/* Mobile Menu Button */}
-          <button
-            onClick={() => setIsOpen(!isOpen)}
-            className="md:hidden p-2 hover:bg-neutral-light rounded-md transition-smooth z-50"
-            aria-label="Toggle menu"
-            aria-expanded={isOpen}
-          >
-            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-            </svg>
-          </button>
-        </div>
-
-        {/* Mobile Navigation with Backdrop */}
-        <AnimatePresence>
-          {isOpen && (
-            <>
-              {/* Backdrop */}
-              <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                onClick={() => setIsOpen(false)}
-                className="fixed inset-0 bg-black/20"
-                style={{ top: "64px" }}
-              />
-              {/* Menu */}
-              <motion.nav
-                initial={{ opacity: 0, y: -10 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -10 }}
-                transition={{ duration: 0.2 }}
-                className="absolute top-16 left-0 right-0 bg-background border-b border-border shadow-lg z-40"
+          {/* Mobile Menu with Sheet and Accordion */}
+          <Sheet open={isOpen} onOpenChange={setIsOpen}>
+            <SheetTrigger asChild>
+              <button
+                className="lg:hidden p-2 hover:bg-neutral-light rounded-md transition-smooth"
+                aria-label="Toggle menu"
               >
-                <div className="px-4 py-2 space-y-1 max-h-[calc(100vh-80px)] overflow-y-auto">
-                  {navItems.map((item) => (
-                    <Link
-                      key={item.href}
-                      href={item.href}
-                      className="block px-4 py-3 text-sm font-medium text-foreground hover:bg-neutral-light rounded-md transition-smooth"
-                      onClick={() => setIsOpen(false)}
-                    >
-                      {item.label}
-                    </Link>
-                  ))}
-                </div>
-              </motion.nav>
-            </>
-          )}
-        </AnimatePresence>
+                <Menu className="w-6 h-6" />
+              </button>
+            </SheetTrigger>
+            <SheetContent side="left" className="w-80">
+              <SheetHeader>
+                <SheetTitle className="text-left">Menu</SheetTitle>
+              </SheetHeader>
+              <nav className="mt-4">
+                <Accordion type="single" collapsible className="w-full">
+                  {navItems.map((item, index) => {
+                    if (item.children) {
+                      return (
+                        <AccordionItem key={item.label} value={`item-${index}`}>
+                          <AccordionTrigger className="text-sm font-medium text-foreground hover:text-primary">
+                            {item.label}
+                          </AccordionTrigger>
+                          <AccordionContent>
+                            <div className="flex flex-col gap-1 pl-4">
+                              {item.children.map((child) => (
+                                <Link
+                                  key={child.href}
+                                  href={child.href}
+                                  className="px-3 py-2 text-sm text-foreground hover:text-primary hover:bg-neutral-light rounded-md transition-smooth"
+                                  onClick={() => setIsOpen(false)}
+                                >
+                                  {child.label}
+                                </Link>
+                              ))}
+                            </div>
+                          </AccordionContent>
+                        </AccordionItem>
+                      )
+                    }
+                    return (
+                      <div key={item.href} className="border-b last:border-b-0">
+                        <Link
+                          href={item.href}
+                          className="block px-3 py-4 text-sm font-medium text-foreground hover:text-primary hover:bg-neutral-light transition-smooth"
+                          onClick={() => setIsOpen(false)}
+                        >
+                          {item.label}
+                        </Link>
+                      </div>
+                    )
+                  })}
+                </Accordion>
+              </nav>
+            </SheetContent>
+          </Sheet>
+        </div>
       </div>
     </header>
   )

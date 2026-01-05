@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion"
 import Link from "next/link"
+import WordOfTheWeek from "@/components/word-of-the-week"
 
 export default function Home() {
   const fadeInUp = {
@@ -32,9 +33,9 @@ export default function Home() {
     <div className="space-y-0">
       {/* Hero Section with Logo */}
       <section className="relative min-h-[600px] flex items-center justify-center bg-gradient-to-br from-primary to-primary-light text-white overflow-hidden">
-        <div className="absolute inset-0 opacity-10">
-          <div className="absolute top-20 left-10 w-72 h-72 bg-accent rounded-full mix-blend-multiply filter blur-3xl" />
-          <div className="absolute bottom-20 right-10 w-72 h-72 bg-accent-light rounded-full mix-blend-multiply filter blur-3xl" />
+        <div className="absolute inset-0 opacity-20">
+          <img src="/images/climate-crisis-environment.jpg" className="w-full h-full object-cover" alt="" />
+          <div className="absolute inset-0 bg-gradient-to-br from-primary/80 to-primary-light/60" />
         </div>
 
         <div className="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
@@ -45,17 +46,14 @@ export default function Home() {
             transition={{ duration: 0.8 }}
           >
             <img
-              src="/logo.png"
+              src="/images/logo.png"
               alt="PCLDRC Logo"
-              className="w-24 h-24 sm:w-32 sm:h-32 mx-auto rounded-full shadow-2xl"
+              className="w-24 h-24 sm:w-32 sm:h-32 mx-auto drop-shadow-2xl"
             />
           </motion.div>
 
-
-
-
           <motion.h1 className="font-serif text-5xl sm:text-6xl font-bold mb-4 text-balance" {...fadeInUp}>
-          Dignity Rights Center
+            Dignity Rights Center
           </motion.h1>
           <motion.p
             className="text-xl sm:text-2xl font-semibold mb-2 text-accent"
@@ -98,23 +96,36 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Mission Section */}
+      {/* Word of the Week & Mission Section */}
       <section className="py-16 bg-white">
-        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-          <motion.div
-            className="text-center mb-12"
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            transition={{ duration: 0.6 }}
-            viewport={{ once: true }}
-          >
-            <h2 className="font-serif text-4xl font-bold mb-4 text-primary">Our Mission</h2>
-            <p className="text-lg text-neutral-dark max-w-3xl mx-auto leading-relaxed">
-              The Pakistan College of Law Dignity Rights Center is dedicated to promoting and protecting human rights
-              through legal education, advocacy, and groundbreaking research. We work to foster a society where dignity,
-              justice, and equality are upheld for all.
-            </p>
-          </motion.div>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            {/* Word of the Week Card */}
+            <div className="order-2 lg:order-1">
+              <WordOfTheWeek />
+            </div>
+
+            {/* Mission Text */}
+            <div className="order-1 lg:order-2">
+              <motion.div
+                className="text-left"
+                initial={{ opacity: 0, x: 20 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.6 }}
+                viewport={{ once: true }}
+              >
+                <h2 className="font-serif text-4xl font-bold mb-6 text-primary">Our Mission</h2>
+                <p className="text-xl text-neutral-dark leading-relaxed mb-6">
+                  The Pakistan College of Law Dignity Rights Center is dedicated to promoting and protecting human
+                  rights through legal education, advocacy, and groundbreaking research.
+                </p>
+                <p className="text-lg text-neutral-dark leading-relaxed">
+                  We work to foster a society where dignity, justice, and equality are upheld for all, leveraging
+                  academic excellence to drive real-world impact.
+                </p>
+              </motion.div>
+            </div>
+          </div>
         </div>
       </section>
 
@@ -221,39 +232,52 @@ export default function Home() {
                 title: "Transgender Rights & Dignity Seminar",
                 date: "Recent",
                 category: "Seminar",
+                image: "/images/transgender-rights-dignity.jpg",
               },
               {
                 title: "Environmental Law & Climate Crisis Forum",
                 date: "Recent",
                 category: "Forum",
+                image: "/images/forest-fires-environment.jpg",
               },
               {
                 title: "Problem-Solving & Decision-Making Workshop",
                 date: "Recent",
                 category: "Workshop",
+                image: "/images/climate-crisis-environment.jpg",
               },
               {
                 title: "Legal Quiz & Knowledge Competition",
                 date: "Upcoming",
                 category: "Competition",
+                image: "/images/quiz-competition-learning.jpg",
               },
             ].map((event, i) => (
               <motion.div
                 key={i}
-                className="p-6 bg-neutral-light rounded-lg border-l-4 border-accent hover:shadow-md transition-smooth"
+                className="group overflow-hidden bg-neutral-light rounded-lg border border-border hover:shadow-md transition-smooth"
                 variants={itemVariants}
               >
-                <div className="flex items-center justify-between mb-2">
-                  <span className="text-xs font-semibold text-accent uppercase">{event.category}</span>
-                  <span className="text-sm text-neutral-dark">{event.date}</span>
+                <div className="h-48 overflow-hidden">
+                  <img
+                    src={event.image || "/placeholder.svg"}
+                    alt={event.title}
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                  />
                 </div>
-                <h3 className="font-serif text-lg font-bold text-primary mb-3">{event.title}</h3>
-                <Link
-                  href="/gallery"
-                  className="text-sm font-semibold text-primary hover:text-primary-light transition-smooth"
-                >
-                  Learn More →
-                </Link>
+                <div className="p-6 border-l-4 border-accent">
+                  <div className="flex items-center justify-between mb-2">
+                    <span className="text-xs font-semibold text-accent uppercase">{event.category}</span>
+                    <span className="text-sm text-neutral-dark">{event.date}</span>
+                  </div>
+                  <h3 className="font-serif text-lg font-bold text-primary mb-3">{event.title}</h3>
+                  <Link
+                    href="/gallery"
+                    className="text-sm font-semibold text-primary hover:text-primary-light transition-smooth"
+                  >
+                    Learn More →
+                  </Link>
+                </div>
               </motion.div>
             ))}
           </motion.div>
