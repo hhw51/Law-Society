@@ -50,8 +50,13 @@
 /* Base styling */
 @layer base {
   * {
-    @apply border-border outline-ring/50;
+    /* Use custom variables instead of non-existent classes */
+    border-width: 1px;
+    border-color: var(--border);
+    outline: 2px solid var(--ring);
+    outline-offset: 2px;
   }
+
   body {
     @apply bg-background text-foreground;
   }
@@ -64,6 +69,14 @@
   }
   .text-balance {
     text-wrap: balance;
+  }
+
+  /* Custom border & outline classes */
+  .border-border {
+    border-color: var(--border);
+  }
+  .outline-ring {
+    outline-color: var(--ring);
   }
 }
 

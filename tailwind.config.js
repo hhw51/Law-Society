@@ -1,12 +1,12 @@
-/** @type {import('tailwindcss').Config} */
 module.exports = {
-  darkMode: ['class'], // Use class-based dark mode
-  content: [
-    './app/**/*.{js,ts,jsx,tsx}',
-    './components/**/*.{js,ts,jsx,tsx}',
-  ],
+  darkMode: ['class'],
+  content: ['./app/**/*.{js,ts,jsx,tsx}', './components/**/*.{js,ts,jsx,tsx}'],
   theme: {
     extend: {
+      colors: {
+        border: 'var(--border)',
+        ring: 'var(--ring)',
+      },
       borderRadius: {
         sm: '0.25rem',
         md: '0.375rem',
@@ -16,6 +16,17 @@ module.exports = {
     },
   },
   plugins: [
-    require('tailwindcss-animate'), // optional for animate utilities
+    require('tailwindcss-animate'),
+    function ({ addUtilities, theme }) {
+      const newUtilities = {
+        '.border-border': {
+          borderColor: theme('colors.border'),
+        },
+        '.outline-ring': {
+          outlineColor: theme('colors.ring'),
+        },
+      }
+      addUtilities(newUtilities, ['responsive', 'hover'])
+    },
   ],
-};
+}
