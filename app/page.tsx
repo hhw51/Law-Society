@@ -51,6 +51,9 @@ export default function Home() {
             />
           </motion.div>
 
+
+
+
           <motion.h1 className="font-serif text-5xl sm:text-6xl font-bold mb-4 text-balance" {...fadeInUp}>
           Dignity Rights Center
           </motion.h1>
