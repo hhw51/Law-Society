@@ -2,41 +2,31 @@
 
 import { useState } from "react"
 import Link from "next/link"
-import { Menu } from "lucide-react"
-import {
-  NavigationMenu,
-  NavigationMenuContent,
-  NavigationMenuItem,
-  NavigationMenuLink,
-  NavigationMenuList,
-  NavigationMenuTrigger,
-  navigationMenuTriggerStyle, // added to fix link styles
-} from "@/components/ui/navigation-menu"
-import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet"
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion"
+import { motion, AnimatePresence } from "framer-motion"
+import { ChevronDown } from "lucide-react" // Ensure lucide-react is installed
 
 export default function Header() {
   const [isOpen, setIsOpen] = useState(false)
+  const [activeDropdown, setActiveDropdown] = useState<string | null>(null)
 
-  // Reorganized navigation structure with Network and Testaments dropdowns
   const navItems = [
     { label: "Home", href: "/" },
     { label: "About", href: "/about" },
     { label: "Practice Areas", href: "/practice-areas" },
-    {
-      label: "Network",
+    { 
+      label: "Network", 
       children: [
         { label: "Members", href: "/members" },
-        { label: "Contact", href: "/contact" },
-      ],
+        { label: "Contact", href: "/contact" }
+      ] 
     },
-    {
-      label: "Testaments",
+    { 
+      label: "Testaments", 
       children: [
         { label: "Blog", href: "/blog" },
         { label: "Newsfeed", href: "/newsfeed" },
-        { label: "Case of the Week", href: "/case-of-the-week" },
-      ],
+        { label: "Case of the Week", href: "/case-of-the-week" }
+      ] 
     },
     { label: "Gallery", href: "/gallery" },
   ]
@@ -45,9 +35,9 @@ export default function Header() {
     <header className="sticky top-0 z-50 bg-background border-b border-border">
       <div className="max-w-7xl mx-auto px-4">
         <div className="flex justify-between items-center h-16">
-          {/* Logo */}
+          {/* Logo Section */}
           <Link href="/" className="flex items-center gap-2 z-50 flex-shrink-0">
-            <img src="/images/logo.png" alt="PCLDRC Logo" className="w-10 h-10 object-contain" />
+            <img src="/logo.png" alt="PCLDRC Logo" className="w-10 h-10 rounded-full object-cover" />
             <div className="hidden sm:block">
               <span className="font-serif font-bold text-xs sm:text-sm text-primary block leading-tight">
                 Dignity Rights Center
@@ -56,115 +46,90 @@ export default function Header() {
             </div>
           </Link>
 
-          {/* Desktop Navigation with NavigationMenu for dropdowns */}
+          {/* Desktop Navigation */}
           <nav className="hidden lg:flex items-center gap-1">
-            <NavigationMenu>
-              <NavigationMenuList>
-                {navItems.map((item) => {
-                  if (item.children) {
-                    return (
-                      <NavigationMenuItem key={item.label}>
-                        <NavigationMenuTrigger className="text-sm font-medium text-foreground hover:text-primary transition-colors">
-                          {item.label}
-                        </NavigationMenuTrigger>
-                        <NavigationMenuContent>
-                          <ul className="grid w-[200px] gap-1 p-2">
-                            {item.children.map((child) => (
-                              <li key={child.href}>
-                                <Link href={child.href} legacyBehavior passHref>
-                                  <NavigationMenuLink className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground">
-                                    <div className="text-sm font-medium leading-none">{child.label}</div>
-                                  </NavigationMenuLink>
-                                </Link>
-                              </li>
-                            ))}
-                          </ul>
-                        </NavigationMenuContent>
-                      </NavigationMenuItem>
-                    )
-                  }
-                  return (
-                    <NavigationMenuItem key={item.href}>
-                      <Link href={item.href} legacyBehavior passHref>
-                        <NavigationMenuLink className={navigationMenuTriggerStyle()}>{item.label}</NavigationMenuLink>
-                      </Link>
-                    </NavigationMenuItem>
-                  )
-                })}
-              </NavigationMenuList>
-            </NavigationMenu>
-          </nav>
-
-          {/* Tablet/Mobile Navigation - simplified for medium screens */}
-          <nav className="hidden md:flex lg:hidden items-center gap-1">
-            {navItems.slice(0, 3).map((item) => (
-              <Link
-                key={item.href || item.label}
-                href={item.href || "#"}
-                className="px-2 py-2 text-xs font-medium text-foreground hover:text-primary hover:bg-neutral-light rounded-md transition-smooth whitespace-nowrap"
+            {navItems.map((item) => (
+              <div 
+                key={item.label} 
+                className="relative"
+                onMouseEnter={() => item.children && setActiveDropdown(item.label)}
+                onMouseLeave={() => setActiveDropdown(null)}
               >
-                {item.label}
-              </Link>
+                {item.children ? (
+                  <button className="flex items-center gap-1 px-3 py-2 text-sm font-medium text-foreground hover:text-primary transition-smooth">
+                    {item.label} <ChevronDown className="w-4 h-4" />
+                  </button>
+                ) : (
+                  <Link href={item.href!} className="px-3 py-2 text-sm font-medium text-foreground hover:text-primary transition-smooth">
+                    {item.label}
+                  </Link>
+                )}
+
+                {/* Dropdown Menu */}
+                <AnimatePresence>
+                  {item.children && activeDropdown === item.label && (
+                    <motion.div
+                      initial={{ opacity: 0, y: 10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: 10 }}
+                      className="absolute top-full left-0 w-48 bg-background border border-border shadow-xl rounded-md py-2"
+                    >
+                      {item.children.map((child) => (
+                        <Link
+                          key={child.href}
+                          href={child.href}
+                          className="block px-4 py-2 text-sm hover:bg-neutral-light text-foreground hover:text-primary"
+                        >
+                          {child.label}
+                        </Link>
+                      ))}
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </div>
             ))}
           </nav>
 
-          {/* Mobile Menu with Sheet and Accordion */}
-          <Sheet open={isOpen} onOpenChange={setIsOpen}>
-            <SheetTrigger asChild>
-              <button
-                className="lg:hidden p-2 hover:bg-neutral-light rounded-md transition-smooth"
-                aria-label="Toggle menu"
-              >
-                <Menu className="w-6 h-6" />
-              </button>
-            </SheetTrigger>
-            <SheetContent side="left" className="w-80">
-              <SheetHeader>
-                <SheetTitle className="text-left">Menu</SheetTitle>
-              </SheetHeader>
-              <nav className="mt-4">
-                <Accordion type="single" collapsible className="w-full">
-                  {navItems.map((item, index) => {
-                    if (item.children) {
-                      return (
-                        <AccordionItem key={item.label} value={`item-${index}`}>
-                          <AccordionTrigger className="text-sm font-medium text-foreground hover:text-primary">
-                            {item.label}
-                          </AccordionTrigger>
-                          <AccordionContent>
-                            <div className="flex flex-col gap-1 pl-4">
-                              {item.children.map((child) => (
-                                <Link
-                                  key={child.href}
-                                  href={child.href}
-                                  className="px-3 py-2 text-sm text-foreground hover:text-primary hover:bg-neutral-light rounded-md transition-smooth"
-                                  onClick={() => setIsOpen(false)}
-                                >
-                                  {child.label}
-                                </Link>
-                              ))}
-                            </div>
-                          </AccordionContent>
-                        </AccordionItem>
-                      )
-                    }
-                    return (
-                      <div key={item.href} className="border-b last:border-b-0">
-                        <Link
-                          href={item.href}
-                          className="block px-3 py-4 text-sm font-medium text-foreground hover:text-primary hover:bg-neutral-light transition-smooth"
-                          onClick={() => setIsOpen(false)}
-                        >
-                          {item.label}
-                        </Link>
-                      </div>
-                    )
-                  })}
-                </Accordion>
-              </nav>
-            </SheetContent>
-          </Sheet>
+          {/* Mobile Menu Button */}
+          <button onClick={() => setIsOpen(!isOpen)} className="md:hidden p-2 z-50">
+            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={isOpen ? "M6 18L18 6M6 6l12 12" : "M4 6h16M4 12h16M4 18h16"} />
+            </svg>
+          </button>
         </div>
+
+        {/* Mobile Navigation */}
+        <AnimatePresence>
+          {isOpen && (
+            <motion.nav
+              initial={{ x: "100%" }}
+              animate={{ x: 0 }}
+              exit={{ x: "100%" }}
+              className="fixed inset-0 bg-background z-40 pt-20 px-4 flex flex-col gap-4"
+            >
+              {navItems.map((item) => (
+                <div key={item.label}>
+                  {item.children ? (
+                    <div className="flex flex-col">
+                      <span className="font-bold text-primary px-4 py-2 text-lg border-b border-border">{item.label}</span>
+                      <div className="pl-6 flex flex-col gap-2 mt-2">
+                        {item.children.map(child => (
+                          <Link key={child.href} href={child.href} onClick={() => setIsOpen(false)} className="py-2 text-foreground">
+                            {child.label}
+                          </Link>
+                        ))}
+                      </div>
+                    </div>
+                  ) : (
+                    <Link href={item.href!} onClick={() => setIsOpen(false)} className="block px-4 py-2 text-lg font-medium border-b border-border">
+                      {item.label}
+                    </Link>
+                  )}
+                </div>
+              ))}
+            </motion.nav>
+          )}
+        </AnimatePresence>
       </div>
     </header>
   )

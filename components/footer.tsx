@@ -9,12 +9,9 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
           {/* About */}
           <div>
-            <div className="flex items-center gap-3 mb-4">
-              <img src="/images/logo.png" alt="PCLDRC Logo" className="w-12 h-12 brightness-0 invert" />
-              <h3 className="font-serif font-bold text-lg leading-tight">Dignity Rights Center</h3>
-            </div>
+            <h3 className="font-serif font-bold text-lg mb-4">Law Society</h3>
             <p className="text-sm text-gray-300">
-              A Pakistan College of Law initiative dedicated to human dignity and rights education since 2019.
+              Providing trusted legal expertise and professional services since 1995.
             </p>
           </div>
 
@@ -50,11 +47,6 @@ export default function Footer() {
             <h4 className="font-semibold mb-4">Resources</h4>
             <ul className="space-y-2 text-sm">
               <li>
-                <Link href="/lexicon" className="hover:text-accent transition-smooth">
-                  Dignity Dictionary (Lexicon)
-                </Link>
-              </li>
-              <li>
                 <Link href="/privacy" className="hover:text-accent transition-smooth">
                   Privacy Policy
                 </Link>
@@ -82,9 +74,7 @@ export default function Footer() {
         </div>
 
         <div className="border-t border-primary-light pt-8">
-          <p className="text-center text-sm text-gray-300">
-            © {currentYear} Pakistan College of Law Dignity Rights Center. All rights reserved.
-          </p>
+          <p className="text-center text-sm text-gray-300">© {currentYear} Law Society. All rights reserved.</p>
         </div>
       </div>
     </footer>

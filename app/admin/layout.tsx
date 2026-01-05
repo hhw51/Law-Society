@@ -48,8 +48,9 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
         className={`fixed lg:relative top-0 left-0 h-screen lg:h-auto z-50 w-64 bg-primary text-white flex flex-col lg:w-64 transition-all duration-300 ${
           sidebarOpen ? "translate-x-0" : "-translate-x-full lg:translate-x-0"
         }`}
-        initial={false}
-        animate={{ x: sidebarOpen ? 0 : typeof window !== "undefined" && window.innerWidth >= 1024 ? 0 : -256 }}
+        initial={{ x: -256 }}
+        animate={{ x: sidebarOpen ? 0 : -256 }}
+        exit={{ x: -256 }}
       >
         {/* Logo */}
         <div className="p-4 border-b border-primary-light flex items-center justify-between">
