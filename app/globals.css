@@ -1,8 +1,17 @@
 @import "tailwindcss";
 
 @plugin "tailwindcss-animate";
+@import "tw-animate-css";
+
+/* Define the custom dark variant for v4 */
+@custom-variant dark (&:is(.dark *));
 
 @theme {
+  /* Fonts */
+  --font-sans: "Inter", "Inter Fallback";
+  --font-serif: "Playfair Display", "Playfair Display Fallback";
+
+  /* Base Theme Colors */
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-card: var(--card);
@@ -22,18 +31,40 @@
   --color-border: var(--border);
   --color-input: var(--input);
   --color-ring: var(--ring);
-  
+
+  /* Charts */
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+
+  /* Sidebar */
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+
+  /* Legal Aesthetic Specifics */
+  --color-primary-light: #2d5a7b;
+  --color-accent-light: #e8c547;
+  --color-neutral-light: var(--color-neutral-light-hex);
+  --color-neutral-medium: var(--color-neutral-medium-hex);
+  --color-neutral-dark: var(--color-neutral-dark-hex);
+  --color-success: #10b981;
+  --color-error: #ef4444;
+  --color-warning: #f59e0b;
+
+  /* Radius */
+  --radius-xl: calc(var(--radius) + 4px);
   --radius-lg: var(--radius);
   --radius-md: calc(var(--radius) - 2px);
   --radius-sm: calc(var(--radius) - 4px);
 }
-
-/*
-  The following imports custom animations. 
-  Note: v4 handles imports differently. If this file exists in node_modules, 
-  it generally works, otherwise you may need to copy the CSS content here.
-*/
-@import "tw-animate-css"; 
 
 @layer base {
   :root {
@@ -52,15 +83,29 @@
     --accent: oklch(0.97 0 0);
     --accent-foreground: oklch(0.205 0 0);
     --destructive: oklch(0.577 0.245 27.325);
-    --destructive-foreground: oklch(0.985 0 0);
+    --destructive-foreground: oklch(0.577 0.245 27.325);
     --border: oklch(0.922 0 0);
     --input: oklch(0.922 0 0);
     --ring: oklch(0.708 0 0);
+    --chart-1: oklch(0.646 0.222 41.116);
+    --chart-2: oklch(0.6 0.118 184.704);
+    --chart-3: oklch(0.398 0.07 227.392);
+    --chart-4: oklch(0.828 0.189 84.429);
+    --chart-5: oklch(0.769 0.188 70.08);
     --radius: 0.625rem;
+    --sidebar: oklch(0.985 0 0);
+    --sidebar-foreground: oklch(0.145 0 0);
+    --sidebar-primary: oklch(0.205 0 0);
+    --sidebar-primary-foreground: oklch(0.985 0 0);
+    --sidebar-accent: oklch(0.97 0 0);
+    --sidebar-accent-foreground: oklch(0.205 0 0);
+    --sidebar-border: oklch(0.922 0 0);
+    --sidebar-ring: oklch(0.708 0 0);
 
-    --color-neutral-light: #f5f5f3;
-    --color-neutral-medium: #e0e0dc;
-    --color-neutral-dark: #4a4a48;
+    /* Neutral Hex mappings */
+    --color-neutral-light-hex: #f5f5f3;
+    --color-neutral-medium-hex: #e0e0dc;
+    --color-neutral-dark-hex: #4a4a48;
   }
 
   .dark {
@@ -83,14 +128,26 @@
     --border: oklch(0.269 0 0);
     --input: oklch(0.269 0 0);
     --ring: oklch(0.439 0 0);
+    --chart-1: oklch(0.488 0.243 264.376);
+    --chart-2: oklch(0.696 0.17 162.48);
+    --chart-3: oklch(0.769 0.188 70.08);
+    --chart-4: oklch(0.627 0.265 303.9);
+    --chart-5: oklch(0.645 0.246 16.439);
+    --sidebar: oklch(0.205 0 0);
+    --sidebar-foreground: oklch(0.985 0 0);
+    --sidebar-primary: oklch(0.488 0.243 264.376);
+    --sidebar-primary-foreground: oklch(0.985 0 0);
+    --sidebar-accent: oklch(0.269 0 0);
+    --sidebar-accent-foreground: oklch(0.985 0 0);
+    --sidebar-border: oklch(0.269 0 0);
+    --sidebar-ring: oklch(0.439 0 0);
   }
 
   * {
-    /* Removed incorrect 'hsl()' wrappers since your vars are 'oklch' */
-    border-color: var(--border); 
+    border-color: var(--border);
     outline-color: color-mix(in oklch, var(--ring), transparent 50%);
   }
-
+  
   body {
     @apply bg-background text-foreground antialiased;
   }
@@ -105,18 +162,18 @@
   }
 }
 
-/* Scrollbar styles remain the same */
+/* Scrollbar styling */
 ::-webkit-scrollbar {
   width: 8px;
   height: 8px;
 }
 ::-webkit-scrollbar-track {
-  background: var(--color-neutral-light);
+  background: var(--color-neutral-light-hex);
 }
 ::-webkit-scrollbar-thumb {
-  background: var(--color-neutral-medium);
+  background: var(--color-neutral-medium-hex);
   border-radius: 4px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--color-neutral-dark);
+  background: var(--color-neutral-dark-hex);
 }
