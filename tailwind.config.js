@@ -1,6 +1,9 @@
 module.exports = {
   darkMode: ['class'],
-  content: ['./app/**/*.{js,ts,jsx,tsx}', './components/**/*.{js,ts,jsx,tsx}'],
+  content: [
+    './app/**/*.{js,ts,jsx,tsx}', 
+    './components/**/*.{js,ts,jsx,tsx}'
+  ],
   theme: {
     extend: {
       colors: {
@@ -31,12 +34,5 @@ module.exports = {
   },
   plugins: [
     require('tailwindcss-animate'),
-    function ({ addUtilities, theme }) {
-      const newUtilities = {
-        '.border-border': { borderColor: theme('colors.border') },
-        '.outline-ring': { outlineColor: theme('colors.ring') },
-      }
-      addUtilities(newUtilities, ['responsive', 'hover'])
-    },
   ],
 }
