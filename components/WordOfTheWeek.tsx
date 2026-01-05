@@ -59,7 +59,7 @@ export default function WordOfTheWeek() {
                   </div>
 
                   <Link 
-                    href="/testaments/dictionary" 
+                    href="/dictionary" 
                     className="inline-flex items-center text-sm font-bold text-primary hover:underline group"
                   >
                     Explore Full Lexicon
