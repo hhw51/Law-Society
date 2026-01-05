@@ -1,8 +1,39 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
 
-@import "tw-animate-css";
+@plugin "tailwindcss-animate";
+
+@theme {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  
+  --radius-lg: var(--radius);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-sm: calc(var(--radius) - 4px);
+}
+
+/*
+  The following imports custom animations. 
+  Note: v4 handles imports differently. If this file exists in node_modules, 
+  it generally works, otherwise you may need to copy the CSS content here.
+*/
+@import "tw-animate-css"; 
 
 @layer base {
   :root {
@@ -55,41 +86,37 @@
   }
 
   * {
-    border-color: hsl(var(--border));
-    outline-color: hsl(var(--ring) / 0.5);
-    }
+    /* Removed incorrect 'hsl()' wrappers since your vars are 'oklch' */
+    border-color: var(--border); 
+    outline-color: color-mix(in oklch, var(--ring), transparent 50%);
+  }
 
   body {
     @apply bg-background text-foreground antialiased;
   }
 }
 
-
 @layer utilities {
   .transition-smooth {
     @apply transition-all duration-300 ease-out;
   }
-
   .text-balance {
     text-wrap: balance;
   }
 }
 
-
+/* Scrollbar styles remain the same */
 ::-webkit-scrollbar {
   width: 8px;
   height: 8px;
 }
-
 ::-webkit-scrollbar-track {
   background: var(--color-neutral-light);
 }
-
 ::-webkit-scrollbar-thumb {
   background: var(--color-neutral-medium);
   border-radius: 4px;
 }
-
 ::-webkit-scrollbar-thumb:hover {
   background: var(--color-neutral-dark);
 }
