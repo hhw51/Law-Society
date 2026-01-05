@@ -31,74 +31,77 @@ export default function Home() {
 
   return (
     <div className="space-y-0">
-      {/* Hero Section with Logo */}
-      <section className="relative min-h-[500px] md:min-h-[600px] flex items-center justify-center bg-gradient-to-br from-primary to-primary-light text-white overflow-hidden py-12 md:py-20">
+<section className="relative min-h-[500px] md:min-h-[650px] flex items-center justify-center bg-gradient-to-br from-primary to-primary-light text-white overflow-hidden py-12 md:py-24">
         <div className="absolute inset-0 opacity-10">
           <div className="absolute top-20 left-10 w-72 h-72 bg-accent rounded-full mix-blend-multiply filter blur-3xl" />
           <div className="absolute bottom-20 right-10 w-72 h-72 bg-accent-light rounded-full mix-blend-multiply filter blur-3xl" />
         </div>
 
-        <div className="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        {/* Content constrained to 1280px max to prevent stretching on LG screens */}
+        <div className="relative max-w-screen-xl mx-auto px-6 text-center">
           <motion.div
-            className="mb-6 md:mb-8"
+            className="mb-6 md:mb-10"
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.8 }}
           >
-            {/* Scaled down logo for mobile */}
             <img
               src="/logo.png"
               alt="PCLDRC Logo"
-              className="w-20 h-20 sm:w-28 md:w-32 mx-auto rounded-full shadow-2xl"
+              className="w-20 h-20 sm:w-28 md:w-36 mx-auto rounded-full shadow-2xl border-4 border-white/10"
             />
           </motion.div>
 
-          {/* Adjusted heading size for mobile */}
-          <motion.h1 className="font-serif text-4xl sm:text-5xl md:text-6xl font-bold mb-3 md:mb-4 text-balance" {...fadeInUp}>
-            Dignity Rights Center
-          </motion.h1>
-          
-          <motion.p
-            className="text-lg sm:text-xl md:text-2xl font-semibold mb-2 text-accent"
-            {...fadeInUp}
-            transition={{ delay: 0.1 }}
-          >
-            Pakistan College of Law
-          </motion.p>
+          <div className="max-w-3xl mx-auto">
+            <motion.h1 
+              className="font-serif text-4xl sm:text-5xl md:text-7xl font-bold mb-4 md:mb-6 tracking-tight leading-tight" 
+              {...fadeInUp}
+            >
+              Dignity Rights Center
+            </motion.h1>
+            
+            <motion.p
+              className="text-lg sm:text-xl md:text-2xl font-bold mb-4 text-accent tracking-wide uppercase"
+              {...fadeInUp}
+              transition={{ delay: 0.1 }}
+            >
+              Pakistan College of Law
+            </motion.p>
 
-          <motion.p
-            className="text-base sm:text-lg text-gray-100 mb-8 max-w-2xl mx-auto text-balance leading-snug"
-            {...fadeInUp}
-            transition={{ delay: 0.2 }}
-          >
-            Advancing justice, dignity, and human rights through legal education, advocacy, and research.
-          </motion.p>
+            <motion.p
+              className="text-base sm:text-lg md:text-xl text-gray-100 mb-10 md:mb-12 max-w-2xl mx-auto leading-relaxed opacity-90"
+              {...fadeInUp}
+              transition={{ delay: 0.2 }}
+            >
+              [cite_start]Advancing justice, dignity, and human rights [cite: 5, 6] through legal education, advocacy, and research.
+            </motion.p>
 
-          {/* Buttons: Stacked on tiny screens, horizontal on sm+ */}
-          <motion.div
-            className="flex flex-col sm:flex-row gap-3 md:gap-4 justify-center"
-            {...fadeInUp}
-            transition={{ delay: 0.3 }}
-          >
-            <Link
-              href="/submit-blog"
-              className="px-6 py-3 bg-accent hover:bg-accent-light text-primary font-bold rounded-lg transition-smooth text-center shadow-lg active:scale-95"
+            {/* Constrained buttons width on larger screens */}
+            <motion.div
+              className="flex flex-col sm:flex-row gap-4 justify-center items-center"
+              {...fadeInUp}
+              transition={{ delay: 0.3 }}
             >
-              Submit a Blog
-            </Link>
-            <Link
-              href="/gallery"
-              className="px-6 py-3 bg-primary-light hover:bg-primary font-semibold text-white rounded-lg transition-smooth border border-white/20 text-center active:scale-95"
-            >
-              View Events
-            </Link>
-            <Link
-              href="/contact"
-              className="px-6 py-3 border-2 border-white hover:bg-white/10 text-white font-semibold rounded-lg transition-smooth text-center active:scale-95"
-            >
-              Get in Touch
-            </Link>
-          </motion.div>
+              <Link
+                href="/submit-blog"
+                className="w-full sm:w-44 px-6 py-3.5 bg-accent hover:bg-accent-light text-primary font-bold rounded-xl transition-all shadow-xl active:scale-95 text-center"
+              >
+                Submit a Blog
+              </Link>
+              <Link
+                href="/gallery"
+                className="w-full sm:w-44 px-6 py-3.5 bg-primary-light hover:bg-primary font-semibold text-white rounded-xl transition-all border border-white/20 text-center active:scale-95 shadow-lg"
+              >
+                View Events
+              </Link>
+              <Link
+                href="/contact"
+                className="w-full sm:w-44 px-6 py-3.5 border-2 border-white hover:bg-white/10 text-white font-semibold rounded-xl transition-all text-center active:scale-95"
+              >
+                Get in Touch
+              </Link>
+            </motion.div>
+          </div>
         </div>
       </section>
 
