@@ -1,5 +1,7 @@
 import { DIGNITY_LEXICON, LexiconEntry } from "@/components/lexiconData";
 
+export const lexicon = DIGNITY_LEXICON;
+
 export function getWordOfTheWeek(): LexiconEntry {
   const now = new Date();
   const start = new Date(now.getFullYear(), 0, 1);
