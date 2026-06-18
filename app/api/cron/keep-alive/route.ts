@@ -17,7 +17,11 @@ export async function GET(request: NextRequest) {
       return NextResponse.json({ error: "Missing environment variables" }, { status: 500 });
     }
 
-    const supabase = createClient(supabaseUrl, serviceKey);
+    const supabase = createClient(
+      process.env.NEXT_PUBLIC_SUPABASE_URL!,
+      process.env.SUPABASE_SERVICE_ROLE_KEY!
+    )
+  
 
     // Light query to keep DB alive
     const { error } = await supabase.from("settings").select("key").limit(1);
