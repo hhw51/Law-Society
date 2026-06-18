@@ -1,38 +1,32 @@
-import { createClient } from '@supabase/supabase-js'
-import { NextResponse } from 'next/server'
+// Look for your custom secret instead of Vercel's system secret
+const CRON_SECRET = process.env.MY_CUSTOM_CRON_SECRET;
 
-export async function GET(request: Request) {
-  // 1. Security Check: Only allow Vercel Crons to trigger this
-  const authHeader = request.headers.get('authorization');
-  if (authHeader !== `Bearer ${process.env.CRON_SECRET}`) {
-    return new Response('Unauthorized', { status: 401 });
-  }
-
-  const supabase = createClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.SUPABASE_SERVICE_ROLE_KEY!
-  )
-
-  const heartbeatId = `ping_${Date.now()}`
-
+export async function GET(request: NextRequest) {
   try {
-    // 2. Insert into the 'settings' table (based on your image)
-    const { error: insertError } = await supabase
-      .from('settings')
-      .insert([{ key: heartbeatId, value: 'keep-alive' }])
+    const authHeader = request.headers.get('authorization');
+    
+    // Check if the header matches your custom secret string
+    if (!CRON_SECRET || authHeader !== `Bearer ${CRON_SECRET}`) {
+      return new NextResponse('Unauthorized', { status: 401 });
+    }
 
-    if (insertError) throw insertError
+    if (!supabaseUrl || !serviceKey) {
+      return NextResponse.json({ error: "Missing environment variables" }, { status: 500 });
+    }
 
-    // 3. Delete it immediately to keep the table clean
-    const { error: deleteError } = await supabase
-      .from('settings')
-      .delete()
-      .eq('key', heartbeatId)
+    const supabase = createClient(supabaseUrl, serviceKey);
 
-    if (deleteError) throw deleteError
+    // Light query to keep DB alive
+    const { error } = await supabase.from("settings").select("key").limit(1);
 
-    return NextResponse.json({ success: true, message: 'Supabase heart beating' })
-  } catch (err) {
-    return NextResponse.json({ error: err.message }, { status: 500 })
+    if (error) {
+      console.error("Keep-alive query error:", error);
+      return NextResponse.json({ error: error.message }, { status: 500 });
+    }
+
+    return NextResponse.json({ message: "Database is awake!" });
+  } catch (error) {
+    console.error("Keep-alive error:", error);
+    return NextResponse.json({ error: "Internal Server Error" }, { status: 500 });
   }
 }
