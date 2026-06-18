@@ -1,8 +1,9 @@
 import { createClient } from '@supabase/supabase-js'
-import { NextResponse } from 'next/server'
+import { type NextRequest, NextResponse } from 'next/server'
 
-// Look for your custom secret instead of Vercel's system secret
 const CRON_SECRET = process.env.MY_CUSTOM_CRON_SECRET;
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+const serviceKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
 
 export async function GET(request: NextRequest) {
   try {
@@ -13,15 +14,13 @@ export async function GET(request: NextRequest) {
       return new NextResponse('Unauthorized', { status: 401 });
     }
 
+    // Safely check if the variables exist now that they are defined above
     if (!supabaseUrl || !serviceKey) {
+      console.error("Missing Supabase environment variables");
       return NextResponse.json({ error: "Missing environment variables" }, { status: 500 });
     }
 
-    const supabase = createClient(
-      process.env.NEXT_PUBLIC_SUPABASE_URL!,
-      process.env.SUPABASE_SERVICE_ROLE_KEY!
-    )
-  
+    const supabase = createClient(supabaseUrl, serviceKey);
 
     // Light query to keep DB alive
     const { error } = await supabase.from("settings").select("key").limit(1);
