@@ -1,3 +1,6 @@
+import { createClient } from '@supabase/supabase-js'
+import { NextResponse } from 'next/server'
+
 // Look for your custom secret instead of Vercel's system secret
 const CRON_SECRET = process.env.MY_CUSTOM_CRON_SECRET;
 
